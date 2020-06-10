@@ -55,7 +55,7 @@ public class AuthHelper {
                 aadConfig.getRedirectUriSignin());
         String redirectUriEncoded = URLEncoder.encode(redirectUri, utf8);
         return String.format(
-                "https://login.microsoftonline.com/common/oauth2/authorize?response_type=code+id_token&redirect_uri=%s&client_id=%s&scope=openid+profile+email&response_mode=form_post&nonce=%s",
+                "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?response_type=code+id_token&redirect_uri=%s&client_id=%s&scope=openid+profile+email&response_mode=form_post&nonce=%s",
                 redirectUriEncoded,
                 aadConfig.getClientId(),
                 nonce);

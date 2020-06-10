@@ -30,8 +30,7 @@ public class AuthFilter implements Filter {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             String path = request.getServletPath();
-            log.info(String.format("Request for %s", path));
-            log.debug("This is a test debug");
+
             if (excludedUrls.contains(path)) {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else if (!authHelper.isAuthenticated(request)) {
