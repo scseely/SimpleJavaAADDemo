@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="Spring" name="Spring">
-      <configuration />
-    </facet>
     <facet type="web" name="Web">
       <configuration>
         <webroots />
       </configuration>
+    </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_10">
@@ -110,7 +110,7 @@
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.1" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />
-    <orderEntry type="library" name="Maven: com.nimbusds:lang-tag:1.4.4" level="project" />
-    <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:8.16" level="project" />
+    <orderEntry type="library" name="Maven: com.nimbusds:lang-tag:1.5" level="project" />
+    <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:9.7" level="project" />
   </component>
 </module>

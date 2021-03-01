@@ -23,7 +23,7 @@ public class AuthController {
     public void authenticate(HttpServletRequest servletRequest,
                              HttpServletResponse servletResponse,
                              @RequestParam Map<String, String> formData) throws Throwable {
-        this.authHelper.authenticate(servletRequest, formData);
-        servletResponse.sendRedirect("/");
+        String state = this.authHelper.authenticate(servletRequest, formData);
+        servletResponse.sendRedirect(state);
     }
 }

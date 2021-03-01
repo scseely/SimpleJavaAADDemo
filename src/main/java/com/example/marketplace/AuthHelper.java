@@ -53,18 +53,27 @@ public class AuthHelper {
                 requestHost.getHost(),
                 requestHost.getPort(),
                 aadConfig.getRedirectUriSignin());
+
+        String state = request.getRequestURL().toString();
+        String queryString = request.getQueryString();
+        if (queryString != null && !queryString.isEmpty()){
+            state = String.format("%s?%s", state, queryString);
+        }
+
         String redirectUriEncoded = URLEncoder.encode(redirectUri, utf8);
         return String.format(
-                "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?response_type=code+id_token&redirect_uri=%s&client_id=%s&scope=openid+profile+email&response_mode=form_post&nonce=%s",
+                "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?response_type=code+id_token&redirect_uri=%s&client_id=%s&scope=openid+profile+email&response_mode=form_post&nonce=%s&state=%s",
                 redirectUriEncoded,
                 aadConfig.getClientId(),
-                nonce);
+                nonce,
+                state);
     }
 
-    public void authenticate(HttpServletRequest servletRequest, Map<String, String> formData) throws Throwable{
+    public String authenticate(HttpServletRequest servletRequest, Map<String, String> formData) throws Throwable{
         String code = formData.get("code");
         String idToken = formData.get("id_token");
         String sessionState = formData.get("session_state");
+        String state = formData.get("state");
         HttpSession session = servletRequest.getSession();
         addAuthToSession(session, code, idToken, sessionState);
 
@@ -89,6 +98,8 @@ public class AuthHelper {
                     oidcResponse.getErrorObject().getCode(),
                     oidcResponse.getErrorObject().getDescription()));
         }
+
+        return state;
     }
 
     private void setSessionPrincipal(HttpSession session, JWT jwt) {
