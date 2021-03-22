@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -43,7 +45,7 @@ public class AuthHelper {
         return null != principal;
     }
 
-    public String getAadUri(HttpServletRequest request) throws URISyntaxException {
+    public String getAadUri(HttpServletRequest request) throws URISyntaxException, UnsupportedEncodingException {
         HttpSession session = request.getSession();
         String nonce = UUID.randomUUID().toString();
         session.setAttribute(NONCE_SESSION_NAME, nonce);
@@ -58,6 +60,7 @@ public class AuthHelper {
         String queryString = request.getQueryString();
         if (queryString != null && !queryString.isEmpty()){
             state = String.format("%s?%s", state, queryString);
+            state = URLEncoder.encode(state, StandardCharsets.UTF_8.toString());
         }
 
         String redirectUriEncoded = URLEncoder.encode(redirectUri, utf8);
@@ -75,6 +78,7 @@ public class AuthHelper {
         String sessionState = formData.get("session_state");
         String state = formData.get("state");
         HttpSession session = servletRequest.getSession();
+
         addAuthToSession(session, code, idToken, sessionState);
 
         Map<String, List<String>> params = toMapStringListString(formData);
